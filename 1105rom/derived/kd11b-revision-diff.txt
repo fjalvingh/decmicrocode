@@ -1,0 +1,36 @@
+Bits where the 1973 and 1976 drawing sets genuinely differ.
+
+Three independent transcriptions back this: two scans of the 1973 listing (at
+815 px and 1460 px wide) and one of the 1976 listing. The two 1973 scans agree
+with each other and disagree with 1976 at every one of these positions, and each
+was checked by eye against all three images. They are not OCR errors: the two
+drawing sets carry different microcode revisions.
+
+The clearest case is U1-1..U5-1, five consecutive microwords where 1973 has
+AUX=1, CKO=0 and 1976 has AUX=0, CKO=1, with URTR immediately after identical
+in both. Which revision is in the machine is open - see MC1105.md phase 6.
+
+NAM    LOC  bit  field  ofs  1973  1976 
+D0-3   162  15   AUX    0    0     1    
+D0-3A  155  15   AUX    0    0     1    
+D1-4   163  15   AUX    0    0     1    
+DB0-2  164  15   AUX    0    0     1    
+DO-10  165  15   AUX    0    0     1    
+MB-0   154  15   AUX    0    1     0    
+MB-0   154  28   CKO    0    0     1    
+MB-1   240  15   AUX    0    0     1    
+SB1-8  006  15   AUX    0    1     0    
+SB2-8  330  15   AUX    0    1     0    
+U1-1   352  15   AUX    0    1     0    
+U1-1   352  28   CKO    0    0     1    
+U2-1   353  15   AUX    0    1     0    
+U2-1   353  28   CKO    0    0     1    
+U3-1   354  15   AUX    0    1     0    
+U3-1   354  28   CKO    0    0     1    
+U4-1   355  15   AUX    0    1     0    
+U4-1   355  28   CKO    0    0     1    
+U5-1   373  15   AUX    0    1     0    
+U5-1   373  28   CKO    0    0     1    
+
+20 bits in 14 microwords.
+by field: [('AUX', 14), ('CKO', 6)]

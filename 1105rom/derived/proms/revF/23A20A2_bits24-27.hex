@@ -1,0 +1,19 @@
+# KD11-B control store, rev F, PROM 23A20A2, schematic bits 24..27 (D0..D3 = bit 24..27)
+# 256 x 4. One hex nibble per location, 16 per row, true microaddress order.
+# 42 locations have no microword in the listing and are set to F (unprogrammed).
+000: B B F B 3 B 2 B B B 1 B B 3 7 B
+020: 9 B 1 1 1 7 B B 3 1 7 B B 3 B B
+040: B B B B F B B B 9 3 B 7 F F F B
+060: B B B B B B F 9 B B B F 7 7 F B
+100: B B F B B B 3 B B 3 B 3 F B B B
+120: F F F 9 9 9 9 9 9 B B F B 9 9 9
+140: 9 9 9 B 1 2 B 3 F B B B A F B B
+160: 7 F F F F F 1 1 F F 1 1 1 F 1 1
+200: B B F B B B B B B 3 B 3 B B B B
+220: 1 7 B B B B B B 7 B B F B 7 B B
+240: F B F F B B 3 B B 3 B B B B 7 B
+260: B B 3 B B B F F 9 F B B B F B F
+300: 3 7 B B B B F B 7 B 7 B B 7 B B
+320: B B B F 9 B B F 2 7 B B B B F B
+340: 9 B 9 B F F 9 B B B A A A A F B
+360: F 9 F F B B F B F B B A B B F F

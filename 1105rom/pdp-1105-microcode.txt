@@ -1,0 +1,195 @@
+PDP 11/05 microcontrol word.
+
+TSV:
+Bit	Name	FieldName	Approx function
+0	BUT-3-L	BUT
+1	BUT-2-L	BUT
+2	BUT-0-L	BUT
+3	BUT-1-L	BUT
+
+4	BMODE-1-H	BMODE
+5	BMODE-0-H	BMODE
+6	RALEG-0-L	ALG
+7	RALEG-1-L	ALG
+
+8	DATI-L		TNS
+9	DATO-L		TNS
+10	ALLOW-BYTE-L	ABT
+11	CKOFF-L	CKO
+
+12	ROM-SPA-2-H	SPA
+13	SP-WRITE-L	SPF
+14	BTOP-H	BPT
+15	BA-CLOCK-L	BAR
+
+16	BBOT-H	BBT
+17	SPA-MUX-1-H	SPM
+18	ROM-SPA-0-H	SPA
+19	SPA-MUX-0-H	SPM
+
+20	ENAB-IN-PAUSE-L	DIP
+21	ROM-SPA-3-H	SPA
+22	ROM-SPA-1-H	SPA
+23	LOAD-PSW-L	PSW
+
+24	AUX-CONTROL-L	AUX
+25	F-SHIFT-L	FSH	Earlier marked as SPARE-L
+26	CIN-H	CRI
+27	ALU-MODE-H	ALU
+
+28	ALU-S0-L	ALU
+29	ALU-S1-L	ALU
+30	ALU-S2-L	ALU
+31	ALU-S3-L	ALU
+
+32	MPC-0-L		MPC
+33	MPC-1-L		MPC
+34	MPC-2-L		MPC
+35	MPC-3-L		MPC
+
+36	MPC-4-L		MPC
+37	MPC-5-L		MPC
+38	MPC-6-L		MPC
+39	MPC-7-L		MPC
+
+PROM Map: bits to the PROM they reside in. Bit assignments from the user manual. 
+2nd and 3rd column are chip numbers and rom assignment for rev.E
+4th and 5th are chip numbers and rom assignments from rev.F
+Bits	Rev.E	Rom#	Rev.F	Rom#
+0-3	E105	23A18A2	E113	23A18A2
+4-7	E093	23A05A2	E104	23A05A2
+8-11	E107	23A14A2	E116	23A19A2	!! check 1
+12-15	E095	23A17A2	E106	23A17A2
+16-19	E106	23A13A2	E115	23A13A2
+20-23	E096	23A16A2	E105	23A16A2
+24-27	E094	23A15A2	E103	23A20A2	!!
+28-31	E104	23A11A2	E114	23A11A2
+32-35	E103	23A10A2	E112	23A10A2
+36-39	E092	23A04A2	E102	23A04A2
+
+Rev.E comes from https://archive.org/details/pdp-11-05-engineering-drawings-oct-1973
+Rev.F comes from https://www.bitsavers.org/pdf/dec/pdp11/1105/1105_RevAH_Engineering_Drawings_Jul76.pdf
+
+ALU operation table (bits in octal).
+Bit 27-31	Operation
+1		AL
+0		AA
+3		AB
+5		A*not B
+7		0
+11		A or B
+13		BL
+14		A plus B
+15		A xor B
+22		A - B - 1
+25		not B
+31		-1
+36		A - 1
+37		not A
+30		ASL
+32		ROL
+34		ASR
+36		ROR
+
+BUT field meaning (value = the nibble as printed, CS bits 03..00; NOT unscrambled into
+BUT-3..0 signal order - corrected 2026-10-02, see derived/kd11b-README.md):
+Meaning	Value (octal)
+NON		17
+JMP/JSR		13
+IR Decode	07
+BYTE		03
+CONST		15
+DEST		11
+MOV		05
+INTR		01
+INIT		16
+UNARY		12
+SWITCHES	06
+NON MOD		02
+SERVICE		14
+SSYNC		10
+ENOFLO		04
+IR CLK		00
+
+BRG field meanings:
+LOAD	3
+SLEFT	1
+SRIGHT	2
+HOLD	0
+
+IO ABT field (bit 10):
+NO	1
+YES	0
+
+BTP field (bit 14):
+BREG	1
+SEX	0
++1	0
+
+BBT Field (bit 16):
+BRG	1
+SEX	1
++1	0
+
+SPF field (bit 13):
+READ	1
+WRITE	0
+
+TNS Field (bits 9,8):
+NONE	3
+DATI	2
+DAO	1
+
+ALG field (bits 7, 6):
+SP	3
+NULL	2
+SPR	1
+PSW	0
+
+SM0,SM1 field (bits 19, 17):
+ROM	3
+IRS	2
+IRD	1
+BA	0
+
+CKOFF field (I think it means Processor Clock OFF):
+OFF	1
+ON	0
+
+AUX field. From 1973 schematic: seems to determine whether an ALU operation comes from bits 15..12 or from bits 10..6. It controls 
+the bits ALU S0..S3, ALU MODE, CIN H, CLK L and DISAB VBIT ROM H through a PROM mapping the instruction bits
+to these signals.
+AUX_CONTROL_L=1: the bits come from IR 10..6 (E054)
+for AUX_CONTROL_L=0 the bits come from IR 15..12 (E053)
+
+---------------------
+ISSUES TO RESOLVE:
+
+Answerable from EK-KD11B-MM-001 or the schematics
+
+  CKO's exact condition — the last of the 23 fields without a settled meaning. It's the clock stop, but 22 of the
+  36 CKO=0 microwords start a bus cycle and 14 don't, while 17 start a DATI without it. Also the value-name
+  polarity (OFF=1) would put the clock off in 178 of 214 microwords, which can't be right.
+  
+  BTP=1, BBT=0 — occurs in 26 microwords and your notes don't name that combination, though it's used more than
+  two of the three named ones. +1 (0,0) never occurs at all.
+  
+  IRS vs IRD in SPAMUX — the data pins ROM and BA (invariant when the mux bits swap) but can't distinguish the
+  other two. Taken from the notes as given.
+  
+  Four value names on trust: ALG's SPR (1 microword) and PSW (5), plus those two.
+  
+  Why the revision moved AUX — the field is understood now, but not what the E→F change was for. It took
+  IR-decoded ALU control away from the six not_A microwords and gave it to the shift terminators and the U group.
+  
+  Curiosity, no impact
+  
+  What the five seven-step shift chains do. Seven shifts ending on an eighth step, SBO/SB1/SB2/DO — looks
+  byte-wide, but that's a guess.
+  
+  42 unlisted control-store locations — unused, or used and not printed.
+
+
+
+
+

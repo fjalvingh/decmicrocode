@@ -1,0 +1,18 @@
+Bits corrected by hand after looking at all three scans side by side.
+
+Each of these is a place where a classifier misread a glyph and the other two
+scans plus a zoomed look at the image settled it. They are applied in the
+shipped listings; this file is the record of what was changed and why.
+
+-- 1973 listing (primary source: the 1460px scans) --
+   CCS-1  316 bit 13 CRI  -> 0   faded slashed zero in both 1973 scans; 1976 shows a clear 0
+   CCS-3  272 bit 13 CRI  -> 0   same
+   CD1-1  313 bit 13 CRI  -> 0   same
+   CD1-1  313 bit 36 BUT  -> 0   same; 1976 shows BUT=0110
+   F-2    053 bit 34 BRG  -> 1   1973 hi-res classifier slip; old 1973 and 1976 both show 1
+   R2-2   230 bit  0 NXT  -> 0   faded slashed zero in both 1973 scans; 1976 shows NXT=0110
+
+-- 1976 listing --
+   SBO-3  324 bit 18 SP3  -> 0   1976 classifier slip (conf 0.17); all three scans show 0
+   SBO-3  324 bit 27 SP2  -> 0   1976 classifier slip (conf 0.04); all three scans show 0
+   SBO-4  340 bit 27 SP2  -> 0   1976 classifier slip (conf 0.13); all three scans show 0

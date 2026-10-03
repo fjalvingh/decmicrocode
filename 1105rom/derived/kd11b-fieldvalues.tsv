@@ -1,0 +1,68 @@
+# Symbolic values for the KD11-B microword fields.
+# Value names come from the M7261 schematics via ../pdp-1105-microcode.txt.
+# VALUE is the field value in octal. PRINTED is the bit pattern as it appears in the
+# listing, left to right. For BUT and BRG the value is the printed pattern as is
+# (corrected 2026-10-02: they were unscrambled, which was wrong; see kd11b-README.md).
+# COUNT is how many of the 214 microwords use it in the 1976 (rev F) listing.
+FIELD	VALUE	PRINTED	NAME	COUNT	NOTE
+BUT	00	0000	IR-CLK	4	CS bits 03..00 as printed
+BUT	01	0001	INTR	1	CS bits 03..00 as printed
+BUT	02	0010	NON-MOD	5	CS bits 03..00 as printed
+BUT	03	0011	BYTE	3	CS bits 03..00 as printed
+BUT	04	0100	ENOFLO	7	CS bits 03..00 as printed
+BUT	05	0101	MOV	2	CS bits 03..00 as printed
+BUT	06	0110	SWITCHES	4	CS bits 03..00 as printed
+BUT	07	0111	IR-DECODE	1	CS bits 03..00 as printed
+BUT	10	1000	SSYNC	1	CS bits 03..00 as printed
+BUT	11	1001	DEST	3	CS bits 03..00 as printed
+BUT	12	1010	UNARY	5	CS bits 03..00 as printed
+BUT	13	1011	JMP/JSR	4	CS bits 03..00 as printed
+BUT	14	1100	SERVICE	15	CS bits 03..00 as printed
+BUT	15	1101	CONST	17	CS bits 03..00 as printed
+BUT	16	1110	INIT	1	CS bits 03..00 as printed
+BUT	17	1111	NON	141	CS bits 03..00 as printed
+BRG	0	00	HOLD	97	CS bit 05 (S0) then 04 (S1) of the 74194
+BRG	1	01	SLEFT	25	CS bit 05 (S0) then 04 (S1) of the 74194
+BRG	2	10	SRIGHT	16	CS bit 05 (S0) then 04 (S1) of the 74194
+BRG	3	11	LOAD	76	CS bit 05 (S0) then 04 (S1) of the 74194
+TNS	0	00	(not named)	1	only in A145, the all-zero filler microword
+TNS	1	01	DATO	7	
+TNS	2	10	DATI	31	
+TNS	3	11	NONE	175	
+ALG	0	00	PSW	5	printed order is RALEG-1,RALEG-0
+ALG	1	01	SPR	1	printed order is RALEG-1,RALEG-0
+ALG	2	10	NULL	31	printed order is RALEG-1,RALEG-0
+ALG	3	11	SP	177	printed order is RALEG-1,RALEG-0
+SPAMUX	3	SM0=1 SM1=1	ROM	170	
+SPAMUX	2	SM0=0 SM1=1	IRS	16	IRS/IRD ordering not confirmed by the data
+SPAMUX	1	SM0=1 SM1=0	IRD	14	IRS/IRD ordering not confirmed by the data
+SPAMUX	0	SM0=0 SM1=0	BA	14	
+ALU	00	00000	AA	1	
+ALU	01	00001	AL	105	
+ALU	03	00011	AB	1	
+ALU	05	00101	A*notB	1	
+ALU	07	00111	ZERO	2	
+ALU	11	01001	A_or_B	1	
+ALU	13	01011	BL	48	
+ALU	14	01100	A_plus_B	21	
+ALU	15	01101	A_xor_B	0	
+ALU	22	10010	A_minus_B_minus_1	9	
+ALU	25	10101	not_B	0	
+ALU	30	11000	ASL	1	
+ALU	31	11001	MINUS1	0	
+ALU	32	11010	ROL	0	
+ALU	34	11100	ASR	16	
+ALU	36	11110	A_minus_1	0	
+ALU	37	11111	not_A	8	
+SPF	1	1	READ	157	
+SPF	0	0	WRITE	57	
+ABT	1	1	NO	201	
+ABT	0	0	YES	13	
+FSH	1	1	NO	179	
+FSH	0	0	SHIFT	35	
+CKO	1	1	OFF	178	
+CKO	0	0	ON	36	
+BTP/BBT	-	BTP=1 BBT=1	BREG	182	B-leg source
+BTP/BBT	-	BTP=0 BBT=1	SEX	6	B-leg source
+BTP/BBT	-	BTP=0 BBT=0	+1	0	B-leg source
+BTP/BBT	-	BTP=1 BBT=0	(not named)	26	observed but absent from the notes
